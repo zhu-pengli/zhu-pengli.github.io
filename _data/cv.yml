@@ -1,0 +1,106 @@
+- title: General Information
+  type: map
+  contents:
+    - name: Full Name
+      value: Pengli Zhu (朱鹏莅)
+    - name: Contact
+      value: pengli.zhu@polyu.edu.hk
+      # value: dlmu.p.l.zhu@gmail.com
+    - name: Languages
+      value: Mandarin (native), English (fluent)
+
+- title: Research Interests
+  type: list
+  contents:
+    - My current research interests include intelligent image processing and machine learning.
+
+- title: Employment
+  type: time_table
+  contents:
+    - title: Research Associate and ITF Postdoctoral Fellow
+      institution: Hong Kong Polytechnic University, Hong Kong.
+      year: 2024.04 - Present
+      description: 
+        - Advised by <a href="https://www.polyu.edu.hk/hti/people/academic-staff/prof-qiu-anqi/">Prof. Anqi Qiu</a>
+        - Research on Q-space Guided DWI Synthesis and MRI Harmonization.
+
+- title: Education
+  type: time_table
+  contents:
+    - title: Joint-Training Ph.D.  Medical Image Analysis
+      institution: National University of Singapore, Singapore
+      year: 2023.02 - 2024.02
+      description:
+        - Advised by <a href="https://cde.nus.edu.sg/bme/staff/dr-qiu-anqi/">Prof. Anqi Qiu</a>
+        - Cycle-conditional diffusion model for noise correction of diffusion-weighted images       
+    - title: B.Eng., M.Eng., Ph.D.  Computer Vision and Intelligent Decision
+      institution: Dalian Maritime University, Dalian, China
+      year: 2013.09 - 2024.04
+      description: 
+        - Advised by <a href="https://ai.dlmu.edu.cn/info/1701/2021.htm">Prof. Yancheng Liu</a>, <a href="https://mec.dlmu.edu.cn/info/1115/5789.htm">Prof. Siyuan Liu</a> and Prof. Youtao Zhao
+        - Research on Unsupervised Quality Enhancement Algorithm for Underwater Images in Complex Marine Environments
+        - Monocular Depth Prediction Based Autonomous Reinforcement Control of Underwater Vehicles
+
+- title: Awards and Honors
+  type: nested_list
+  contents:
+    - title: Awards
+      items:
+        - Awarded 1st Prize in the Brain Region Segmentation Task of the Parkinson's Disease Auto Diagnosis Challenge, MICCAI 2025
+        - China Scholarship Council (CSC) (NO.202206570013)
+        - Excellence Award - 2nd National Postdoctoral Innovation and Entrepreneurship Competition (Innovation Track) (NO.2023100069)
+        - Outstanding Paper of 2022 - Journal of Electronics & Information Technology
+    - title: Honors
+      items:
+        - Session Chair of Top Conference (OCEANS 2024-Singapore)
+
+- title: Activities
+  type: nested_list
+  contents:
+    - title: Regular Reviever
+      items:
+        - MICCAI
+        - Neural Networks
+        - Pattern Recognition
+        - Medical Image Analysis
+        - Expert Systems with Applications
+        - IEEE Transactions on Medical Imaging
+        - IEEE Transactions on Vehicular Technology
+        - Engineering Applications of Artificial Intelligence
+        - IEEE Journal of Biomedical and Health Informatics
+        - IEEE Transactions on Pattern Analysis and Machine Intelligence
+    - title: Professional Memberships
+      items:
+        - Institute of Electrical and Electronics Engineers (IEEE)
+        - Medical Image Computing and Computer Assisted Intervention (MICCAI)
+        - Organization for Human Brain Mapping (OHBM)
+        - China Computer Federation (CCF)
+
+# - title: Teaching Experience
+#   type: time_table
+#   contents:
+#     - title: Teaching Assistant
+#       institution: ShanghaiTech University, Shanghai, China
+#       year: 2023.03 - 2023.07
+#       description:
+#         - "Course: Medical Big-Data and Artificial Intelligence (BME-2106)"
+#         - "Responsibilities: Grading, office hours, and project supervision"
+
+- title: Computer Skills
+  type: list
+  contents:
+    - "Programming Languages: Python, C#, MATLAB"
+    - "Frameworks: PyTorch, TensorFlow, OpenCV, scikit-learn"
+    - "Tools: Git, Docker, LaTeX, Jupyter Notebook"
+    - "Platforms: Linux, Windows"
+
+- title: Other Interests
+  type: list
+  contents:
+    - "Sports: Basketball, Running"
+    - "Hobbies: Cooking, Traveling, NBA"
+
+- title: Visitors
+  type: list
+  contents:
+    - <div style="display:inline-block;width:300px;"><script type='text/javascript' id='clustrmaps' src='//cdn.clustrmaps.com/map_v2.js?cl=ffffff&w=a&t=tt&d=ZKonaVTdvqlX8gAHyqzcU1QgAN38-pUmfvVAl0xBuaw'></script></div>
