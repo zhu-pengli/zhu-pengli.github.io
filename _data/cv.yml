@@ -4,8 +4,9 @@
     - name: Full Name
       value: Pengli Zhu (朱鹏莅)
     - name: Contact
-      value: pengli.zhu@polyu.edu.hk
-      # value: dlmu.p.l.zhu@gmail.com
+      value: dlmu.p.l.zhu@gmail.com
+   
+# 值：dlmu.plzhu@gmail.com
     - name: Languages
       value: Mandarin (native), English (fluent)
 
@@ -19,7 +20,7 @@
   contents:
     - title: Research Associate and ITF Postdoctoral Fellow
       institution: Hong Kong Polytechnic University, Hong Kong.
-      year: 2024.04 - Present
+      year: 2024.04 - 2026.02
       description: 
         - Advised by <a href="https://www.polyu.edu.hk/hti/people/academic-staff/prof-qiu-anqi/">Prof. Anqi Qiu</a>
         - Research on Q-space Guided DWI Synthesis and MRI Harmonization.
