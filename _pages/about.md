@@ -12,10 +12,10 @@ profile:
     <p></p>
 
 selected_papers: false # includes a list of papers marked as "selected={true}"
-social: false # includes social icons at the bottom of the page
+social: true # includes social icons at the bottom of the page
 
 announcements:
-  enabled: true # includes a list of news items
+  enabled: false # includes a list of news items
   scrollable: true # adds a vertical scroll bar if there are more than 3 news items
   limit:  # leave blank to include all the news in the `_news` folder
 
@@ -32,3 +32,9 @@ I am currently a Research Staff with the Department of Electronic Engineering at
 #### Research
 
 My current research focuses on medical image analysis, particularly in developing deep learning models for medical image synthesis, noise correction, and quality assessment. I explore generative frameworks such as conditional diffusion models and attention-based networks to address challenges in unpaired data settings and complex image representations. Previously, I worked extensively on underwater vision, including unsupervised image enhancement and perception-driven control of autonomous vehicles. I have published 20+ peer-reviewed papers in international journals and conferences, and have been granted several patents in these areas.
+
+#### Highlights
+
+- Medical image synthesis, harmonization, and quality assessment
+- Diffusion models and attention-based deep learning
+- Underwater vision enhancement and autonomous vehicle perception
