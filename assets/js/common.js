@@ -17,6 +17,22 @@ $(document).ready(function () {
   });
   $("a").removeClass("waves-effect waves-light");
 
+  $(".publications ol.bibliography li").each(function () {
+    const $entry = $(this);
+    const $website = $entry.find(".links a.btn").filter(function () {
+      return $(this).text().trim().toLowerCase() === "website";
+    });
+    const websiteUrl = $website.attr("href");
+
+    if (websiteUrl) {
+      const $title = $entry.find(".title").first();
+      if (!$title.children("a").length) {
+        $title.wrapInner(`<a href="${websiteUrl}"></a>`);
+      }
+      $website.remove();
+    }
+  });
+
   // bootstrap-toc
   if ($("#toc-sidebar").length) {
     // remove related publications years from the TOC
