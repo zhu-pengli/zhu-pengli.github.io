@@ -2,11 +2,9 @@
   type: map
   contents:
     - name: Full Name
-      value: Pengli Zhu (朱鹏莅)
+      value: Pengli Zhu
     - name: Contact
       value: dlmu.p.l.zhu@gmail.com
-   
-# 值：dlmu.plzhu@gmail.com
     - name: Languages
       value: Mandarin (native), English (fluent)
 
