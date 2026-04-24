@@ -758,6 +758,16 @@ footer.sticky-bottom {
 
       .title {
         font-weight: bolder;
+
+        a {
+          color: inherit;
+          text-decoration: none;
+
+          &:hover {
+            color: var(--global-theme-color);
+            text-decoration: underline;
+          }
+        }
       }
 
       .author {

@@ -48,7 +48,13 @@
   <!-- Entry bib key -->
   <div id="{{ entry.key }}" class="{% if site.enable_publication_thumbnails %}col-sm-8{% else %}col-sm-10{% endif %}">
     <!-- Title -->
-    <div class="title" style="font-size: 22px; font-family: 'Times New Roman', Times, serif;">{{ entry.title }}</div>
+    <div class="title" style="font-size: 22px; font-family: 'Times New Roman', Times, serif;">
+      {% if entry.website %}
+        <a href="{{ entry.website }}">{{ entry.title }}</a>
+      {% else %}
+        {{ entry.title }}
+      {% endif %}
+    </div>
     <!-- Author -->
     <div class="author" style="font-size: 16px; font-family: 'Times New Roman', Times, serif;">
       {% assign author_array_size = entry.author_array | size %}
@@ -259,9 +265,6 @@
         {% else %}
           <a href="{{ entry.slides | prepend: '/assets/pdf/' | relative_url }}" class="btn btn-sm z-depth-0" role="button">Slides</a>
         {% endif %}
-      {% endif %}
-      {% if entry.website %}
-        <a href="{{ entry.website }}" class="btn btn-sm z-depth-0" role="button">Website</a>
       {% endif %}
     </div>
     {% if site.enable_publication_badges %}
