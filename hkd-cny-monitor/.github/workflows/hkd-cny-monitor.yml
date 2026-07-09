@@ -1,0 +1,103 @@
+name: HKD/CNY Monitor
+
+on:
+  schedule:
+    # 18:15 Asia/Shanghai, Monday-Friday. Frankfurter publishes daily reference rates.
+    - cron: "15 10 * * 1-5"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  issues: write
+
+jobs:
+  monitor:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Run monitor
+        run: python monitor.py --config config.json --output data/rates.json --summary data/summary.md --github-env "$GITHUB_ENV" --print-summary
+
+      - name: Add run summary
+        run: cat data/summary.md >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Commit updated data
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/rates.json data/summary.md
+          git diff --cached --quiet || git commit -m "Update HKD/CNY monitor data"
+          git push
+
+      - name: Open or update alert issue
+        if: env.HKD_CNY_ALERT == 'true'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require("fs");
+            const { owner, repo } = context.repo;
+            const title = process.env.HKD_CNY_TITLE || "HKD/CNY 高位提醒";
+            const body = fs.readFileSync("data/summary.md", "utf8");
+            const { data: issues } = await github.rest.issues.listForRepo({
+              owner,
+              repo,
+              state: "open",
+              per_page: 100
+            });
+            const existing = issues.find((issue) =>
+              !issue.pull_request && issue.title.startsWith("HKD/CNY")
+            );
+            if (existing) {
+              await github.rest.issues.update({
+                owner,
+                repo,
+                issue_number: existing.number,
+                title,
+                body
+              });
+            } else {
+              await github.rest.issues.create({
+                owner,
+                repo,
+                title,
+                body
+              });
+            }
+
+      - name: Close stale alert issue
+        if: env.HKD_CNY_ALERT != 'true'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const { owner, repo } = context.repo;
+            const { data: issues } = await github.rest.issues.listForRepo({
+              owner,
+              repo,
+              state: "open",
+              per_page: 100
+            });
+            const existing = issues.find((issue) =>
+              !issue.pull_request && issue.title.startsWith("HKD/CNY")
+            );
+            if (existing) {
+              await github.rest.issues.createComment({
+                owner,
+                repo,
+                issue_number: existing.number,
+                body: "本次运行未触发高位提醒，自动关闭。"
+              });
+              await github.rest.issues.update({
+                owner,
+                repo,
+                issue_number: existing.number,
+                state: "closed"
+              });
+            }

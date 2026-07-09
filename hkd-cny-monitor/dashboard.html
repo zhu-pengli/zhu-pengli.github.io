@@ -1,0 +1,802 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>HKD/CNY 汇率监测</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #f6f7f9;
+      --panel: #ffffff;
+      --panel-soft: #f0f3f7;
+      --text: #17202a;
+      --muted: #667085;
+      --line: #d7dde6;
+      --blue: #2563eb;
+      --green: #15803d;
+      --amber: #b45309;
+      --red: #b42318;
+      --ink: #0f172a;
+      --shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-width: 320px;
+      background: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Microsoft YaHei", sans-serif;
+      font-size: 16px;
+      letter-spacing: 0;
+    }
+
+    button,
+    input,
+    select {
+      font: inherit;
+    }
+
+    .app {
+      width: min(1180px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 24px 0 36px;
+    }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      min-height: 78px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .eyebrow {
+      margin: 0 0 6px;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    h1,
+    h2,
+    p {
+      margin: 0;
+    }
+
+    h1 {
+      font-size: clamp(26px, 4vw, 42px);
+      line-height: 1.1;
+      font-weight: 800;
+      color: var(--ink);
+    }
+
+    h2 {
+      font-size: 18px;
+      line-height: 1.25;
+      color: var(--ink);
+    }
+
+    .status-badge {
+      flex: 0 0 auto;
+      min-width: 104px;
+      padding: 10px 14px;
+      border-radius: 8px;
+      border: 1px solid var(--line);
+      background: var(--panel);
+      text-align: center;
+      font-weight: 800;
+      box-shadow: var(--shadow);
+    }
+
+    .status-badge.alert {
+      color: var(--red);
+      border-color: rgba(180, 35, 24, 0.25);
+      background: #fff4f2;
+    }
+
+    .status-badge.watch {
+      color: var(--amber);
+      border-color: rgba(180, 83, 9, 0.25);
+      background: #fff7ed;
+    }
+
+    .status-badge.wait {
+      color: var(--green);
+      border-color: rgba(21, 128, 61, 0.25);
+      background: #f0fdf4;
+    }
+
+    .controls {
+      display: grid;
+      grid-template-columns: minmax(160px, 1.2fr) repeat(3, minmax(130px, 0.7fr)) auto;
+      gap: 12px;
+      align-items: end;
+      padding: 18px 0;
+    }
+
+    label {
+      display: grid;
+      gap: 6px;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    input,
+    select {
+      width: 100%;
+      height: 42px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--panel);
+      color: var(--text);
+      padding: 0 12px;
+      outline: none;
+    }
+
+    input:focus,
+    select:focus {
+      border-color: var(--blue);
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.14);
+    }
+
+    button {
+      height: 42px;
+      min-width: 92px;
+      border: 0;
+      border-radius: 8px;
+      background: var(--ink);
+      color: #fff;
+      cursor: pointer;
+      font-weight: 800;
+    }
+
+    button:disabled {
+      cursor: wait;
+      opacity: 0.55;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1.55fr) minmax(290px, 0.85fr);
+      gap: 16px;
+      align-items: stretch;
+    }
+
+    .panel,
+    .metric,
+    .detail-band {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      box-shadow: var(--shadow);
+    }
+
+    .panel {
+      min-height: 460px;
+      padding: 18px;
+    }
+
+    .chart-head {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 16px;
+      min-height: 50px;
+      margin-bottom: 12px;
+    }
+
+    .subtle {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.45;
+    }
+
+    .chart-wrap {
+      position: relative;
+      width: 100%;
+      height: 370px;
+    }
+
+    canvas {
+      display: block;
+      width: 100%;
+      height: 100%;
+    }
+
+    .metrics {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+    }
+
+    .metric {
+      min-height: 94px;
+      padding: 16px;
+    }
+
+    .metric .label {
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 800;
+      margin-bottom: 8px;
+    }
+
+    .metric .value {
+      color: var(--ink);
+      font-size: 25px;
+      line-height: 1.1;
+      font-weight: 850;
+      overflow-wrap: anywhere;
+    }
+
+    .metric .caption {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.4;
+      margin-top: 8px;
+    }
+
+    .detail-band {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(300px, 0.7fr);
+      gap: 18px;
+      margin-top: 16px;
+      padding: 18px;
+    }
+
+    .action {
+      min-height: 88px;
+      padding: 14px;
+      border-left: 4px solid var(--blue);
+      background: var(--panel-soft);
+      border-radius: 8px;
+      line-height: 1.65;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      table-layout: fixed;
+      font-size: 14px;
+    }
+
+    th,
+    td {
+      padding: 10px 8px;
+      border-bottom: 1px solid var(--line);
+      text-align: right;
+      white-space: nowrap;
+    }
+
+    th:first-child,
+    td:first-child {
+      text-align: left;
+    }
+
+    th {
+      color: var(--muted);
+      font-size: 12px;
+      text-transform: uppercase;
+    }
+
+    .footer {
+      margin-top: 16px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    .footer a {
+      color: var(--blue);
+    }
+
+    @media (max-width: 900px) {
+      .controls,
+      .layout,
+      .detail-band {
+        grid-template-columns: 1fr;
+      }
+
+      .topbar {
+        align-items: flex-start;
+        flex-direction: column;
+        padding-bottom: 16px;
+      }
+
+      .status-badge {
+        width: 100%;
+      }
+    }
+
+    @media (max-width: 540px) {
+      .app {
+        width: min(100% - 20px, 1180px);
+        padding-top: 16px;
+      }
+
+      .panel {
+        padding: 14px;
+      }
+
+      .chart-wrap {
+        height: 300px;
+      }
+
+      .metric .value {
+        font-size: 22px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <header class="topbar">
+      <div>
+        <p class="eyebrow">HKD -> CNY</p>
+        <h1>港币兑人民币监测</h1>
+      </div>
+      <div id="statusBadge" class="status-badge">读取中</div>
+    </header>
+
+    <section class="controls" aria-label="monitor controls">
+      <label>
+        金额 HKD
+        <input id="amountInput" type="number" min="0" step="1000" value="100000">
+      </label>
+      <label>
+        窗口
+        <select id="lookbackSelect">
+          <option value="30">30 日</option>
+          <option value="60">60 日</option>
+          <option value="90" selected>90 日</option>
+          <option value="180">180 日</option>
+        </select>
+      </label>
+      <label>
+        高点阈值 %
+        <input id="thresholdInput" type="number" min="0" step="0.05" value="0.30">
+      </label>
+      <label>
+        分位阈值 %
+        <input id="percentileInput" type="number" min="0" max="100" step="1" value="90">
+      </label>
+      <button id="refreshButton" type="button">刷新</button>
+    </section>
+
+    <main class="layout">
+      <section class="panel">
+        <div class="chart-head">
+          <div>
+            <h2 id="chartTitle">近期走势</h2>
+            <p id="chartMeta" class="subtle">等待数据</p>
+          </div>
+          <p id="sourceLabel" class="subtle">Frankfurter</p>
+        </div>
+        <div class="chart-wrap">
+          <canvas id="rateChart" aria-label="HKD CNY rate chart"></canvas>
+        </div>
+      </section>
+
+      <section class="metrics" aria-label="key metrics">
+        <article class="metric">
+          <p class="label">最新参考价</p>
+          <p id="latestRate" class="value">--</p>
+          <p id="latestDate" class="caption">--</p>
+        </article>
+        <article class="metric">
+          <p class="label">距离近期高点</p>
+          <p id="distanceHigh" class="value">--</p>
+          <p id="highPoint" class="caption">--</p>
+        </article>
+        <article class="metric">
+          <p class="label">当前分位</p>
+          <p id="percentile" class="value">--</p>
+          <p id="trend" class="caption">--</p>
+        </article>
+        <article class="metric">
+          <p class="label">可换人民币估算</p>
+          <p id="estimatedCny" class="value">--</p>
+          <p id="missedCny" class="caption">--</p>
+        </article>
+      </section>
+    </main>
+
+    <section class="detail-band">
+      <div>
+        <h2>换汇窗口</h2>
+        <p id="actionText" class="action">等待数据</p>
+      </div>
+      <div>
+        <h2>最近报价</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>日期</th>
+              <th>1 HKD = CNY</th>
+            </tr>
+          </thead>
+          <tbody id="recentRows"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <p class="footer">
+      数据源：<a href="https://frankfurter.dev/" target="_blank" rel="noreferrer">Frankfurter exchange-rate API</a>。
+      参考汇率不等于银行实盘价，换汇前请比较买入价、手续费和额度规则。
+    </p>
+  </div>
+
+  <script>
+    const providerUrl = "https://api.frankfurter.dev";
+    const defaultConfig = {
+      amount_hkd: 100000,
+      lookback_days: 90,
+      near_high_threshold_pct: 0.30,
+      alert_min_percentile: 90,
+      target_rate: null,
+      bank_spread_pct: 0.15
+    };
+    const state = {
+      points: [],
+      source: "Frankfurter",
+      lastResult: null
+    };
+
+    const nodes = {
+      amount: document.getElementById("amountInput"),
+      lookback: document.getElementById("lookbackSelect"),
+      threshold: document.getElementById("thresholdInput"),
+      percentileInput: document.getElementById("percentileInput"),
+      refresh: document.getElementById("refreshButton"),
+      status: document.getElementById("statusBadge"),
+      chartTitle: document.getElementById("chartTitle"),
+      chartMeta: document.getElementById("chartMeta"),
+      sourceLabel: document.getElementById("sourceLabel"),
+      latestRate: document.getElementById("latestRate"),
+      latestDate: document.getElementById("latestDate"),
+      distanceHigh: document.getElementById("distanceHigh"),
+      highPoint: document.getElementById("highPoint"),
+      percentile: document.getElementById("percentile"),
+      trend: document.getElementById("trend"),
+      estimatedCny: document.getElementById("estimatedCny"),
+      missedCny: document.getElementById("missedCny"),
+      action: document.getElementById("actionText"),
+      rows: document.getElementById("recentRows"),
+      canvas: document.getElementById("rateChart")
+    };
+
+    window.addEventListener("resize", () => {
+      if (state.lastResult) drawChart(state.lastResult);
+    });
+    nodes.refresh.addEventListener("click", () => refreshLive());
+    [nodes.amount, nodes.lookback, nodes.threshold, nodes.percentileInput].forEach((node) => {
+      node.addEventListener("input", () => renderFromState());
+    });
+
+    bootstrap();
+
+    async function bootstrap() {
+      setLoading(true);
+      try {
+        const result = await loadLocalResult();
+        state.points = normalizePoints(result.points || []);
+        state.source = result.source?.name || "data/rates.json";
+        hydrateControls(result.config || defaultConfig);
+        renderFromState();
+      } catch (error) {
+        await refreshLive();
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    async function loadLocalResult() {
+      const response = await fetch(`data/rates.json?ts=${Date.now()}`, { cache: "no-store" });
+      if (!response.ok) throw new Error("No local data");
+      return response.json();
+    }
+
+    async function refreshLive() {
+      setLoading(true);
+      try {
+        const config = readControls();
+        const points = await fetchLivePoints(config.lookback_days);
+        state.points = points;
+        state.source = "Frankfurter live";
+        renderFromState();
+      } catch (error) {
+        showError(error);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    async function fetchLivePoints(lookbackDays) {
+      const today = new Date();
+      const start = new Date(today);
+      start.setDate(today.getDate() - lookbackDays - Math.max(45, Math.round(lookbackDays * 0.6)));
+      const params = new URLSearchParams({
+        base: "HKD",
+        quotes: "CNY",
+        from: toIsoDate(start),
+        to: toIsoDate(today)
+      });
+      const response = await fetch(`${providerUrl}/v2/rates?${params.toString()}`, { cache: "no-store" });
+      if (!response.ok) throw new Error(`API ${response.status}`);
+      const payload = await response.json();
+      return extractRatePoints(payload);
+    }
+
+    function extractRatePoints(payload) {
+      if (Array.isArray(payload)) {
+        return normalizePoints(payload.map((row) => ({ date: row.date, rate: row.rate })));
+      }
+      if (Array.isArray(payload.value)) {
+        return normalizePoints(payload.value.map((row) => ({ date: row.date, rate: row.rate })));
+      }
+      const rates = payload.rates || {};
+      if (Array.isArray(rates)) {
+        return normalizePoints(rates.map((row) => ({ date: row.date || row.day, rate: row.rate || row.CNY })));
+      }
+      const rows = Object.entries(rates)
+        .filter(([, quote]) => quote && quote.CNY)
+        .map(([date, quote]) => ({ date, rate: Number(quote.CNY) }));
+      return normalizePoints(rows);
+    }
+
+    function normalizePoints(points) {
+      return points
+        .map((point) => ({ date: String(point.date), rate: Number(point.rate) }))
+        .filter((point) => point.date && Number.isFinite(point.rate) && point.rate > 0)
+        .sort((a, b) => a.date.localeCompare(b.date));
+    }
+
+    function renderFromState() {
+      if (!state.points.length) return;
+      const result = analyze(state.points, readControls());
+      state.lastResult = result;
+      render(result);
+      drawChart(result);
+    }
+
+    function readControls() {
+      return {
+        amount_hkd: Number(nodes.amount.value || defaultConfig.amount_hkd),
+        lookback_days: Number(nodes.lookback.value || defaultConfig.lookback_days),
+        near_high_threshold_pct: Number(nodes.threshold.value || defaultConfig.near_high_threshold_pct),
+        alert_min_percentile: Number(nodes.percentileInput.value || defaultConfig.alert_min_percentile),
+        target_rate: null,
+        bank_spread_pct: defaultConfig.bank_spread_pct
+      };
+    }
+
+    function hydrateControls(config) {
+      nodes.amount.value = Number(config.amount_hkd ?? defaultConfig.amount_hkd);
+      nodes.lookback.value = String(config.lookback_days ?? defaultConfig.lookback_days);
+      nodes.threshold.value = Number(config.near_high_threshold_pct ?? defaultConfig.near_high_threshold_pct);
+      nodes.percentileInput.value = Number(config.alert_min_percentile ?? defaultConfig.alert_min_percentile);
+    }
+
+    function analyze(points, config) {
+      const trimmed = normalizePoints(points).slice(-config.lookback_days);
+      const values = trimmed.map((point) => point.rate);
+      const latest = trimmed[trimmed.length - 1];
+      const high = Math.max(...values);
+      const low = Math.min(...values);
+      const highDates = trimmed.filter((point) => point.rate === high).map((point) => point.date);
+      const lowDates = trimmed.filter((point) => point.rate === low).map((point) => point.date);
+      const latestRate = latest.rate;
+      const distanceToHigh = ((high - latestRate) / high) * 100;
+      const percentile = (values.filter((value) => value <= latestRate).length / values.length) * 100;
+      const nearHigh = distanceToHigh <= config.near_high_threshold_pct;
+      const percentileOk = percentile >= config.alert_min_percentile;
+      const targetHit = config.target_rate !== null && latestRate >= config.target_rate;
+      const alert = targetHit || (nearHigh && percentileOk);
+      const change7 = pctChange(trimmed, 7);
+      const change30 = pctChange(trimmed, 30);
+      const grossCny = config.amount_hkd * latestRate;
+      const netCny = grossCny * (1 - config.bank_spread_pct / 100);
+      const missedCny = config.amount_hkd * Math.max(high - latestRate, 0);
+
+      let status = "wait";
+      let statusLabel = "继续等待";
+      let action = "距离近期高点还有空间。非刚需时，继续等待更优报价更符合高点换汇目标。";
+      if (alert) {
+        status = "alert";
+        statusLabel = "高位提醒";
+        action = "已进入配置的近期高位区间。适合重点比较银行实盘价，并按你的资金计划考虑是否分批换汇。";
+      } else if (distanceToHigh <= config.near_high_threshold_pct * 2 || percentile >= 80) {
+        status = "watch";
+        statusLabel = "接近高位";
+        action = "价格已经偏高但未完全触发提醒。可以继续观察，并提前准备好换汇渠道和限价。";
+      }
+
+      return {
+        points: trimmed,
+        latest: { ...latest, label: `1 HKD = ${latestRate.toFixed(6)} CNY` },
+        window: {
+          from: trimmed[0].date,
+          to: latest.date,
+          high_rate: high,
+          high_dates: highDates,
+          low_rate: low,
+          low_dates: lowDates,
+          distance_to_high_pct: distanceToHigh,
+          percentile,
+          change_7d_pct: change7,
+          change_30d_pct: change30
+        },
+        amount: {
+          hkd: config.amount_hkd,
+          gross_cny_at_latest: grossCny,
+          estimated_net_cny_after_spread: netCny,
+          missed_cny_vs_recent_high: missedCny
+        },
+        signals: { status, status_label: statusLabel, alert, near_high: nearHigh, percentile_ok: percentileOk, action },
+        config
+      };
+    }
+
+    function pctChange(points, periods) {
+      if (points.length <= periods) return null;
+      const previous = points[points.length - periods - 1].rate;
+      const latest = points[points.length - 1].rate;
+      return ((latest - previous) / previous) * 100;
+    }
+
+    function render(result) {
+      const { latest, window, amount, signals, config } = result;
+      nodes.status.textContent = signals.status_label;
+      nodes.status.className = `status-badge ${signals.status}`;
+      nodes.chartTitle.textContent = `${config.lookback_days} 日走势`;
+      nodes.chartMeta.textContent = `${window.from} 至 ${window.to}`;
+      nodes.sourceLabel.textContent = state.source;
+      nodes.latestRate.textContent = latest.label;
+      nodes.latestDate.textContent = latest.date;
+      nodes.distanceHigh.textContent = `${window.distance_to_high_pct.toFixed(2)}%`;
+      nodes.highPoint.textContent = `高点 ${window.high_rate.toFixed(6)}，${window.high_dates.at(-1)}`;
+      nodes.percentile.textContent = `${window.percentile.toFixed(2)}%`;
+      nodes.trend.textContent = `7日 ${formatPct(window.change_7d_pct)} / 30日 ${formatPct(window.change_30d_pct)}`;
+      nodes.estimatedCny.textContent = `${formatMoney(amount.gross_cny_at_latest)} CNY`;
+      nodes.missedCny.textContent = `距高点少换约 ${formatMoney(amount.missed_cny_vs_recent_high)} CNY`;
+      nodes.action.textContent = signals.action;
+      nodes.rows.innerHTML = result.points
+        .slice(-7)
+        .reverse()
+        .map((point) => `<tr><td>${point.date}</td><td>${point.rate.toFixed(6)}</td></tr>`)
+        .join("");
+    }
+
+    function drawChart(result) {
+      const canvas = nodes.canvas;
+      const rect = canvas.getBoundingClientRect();
+      const dpr = window.devicePixelRatio || 1;
+      canvas.width = Math.max(1, Math.floor(rect.width * dpr));
+      canvas.height = Math.max(1, Math.floor(rect.height * dpr));
+      const ctx = canvas.getContext("2d");
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      ctx.clearRect(0, 0, rect.width, rect.height);
+
+      const points = result.points;
+      if (!points.length) return;
+
+      const pad = { left: 58, right: 16, top: 18, bottom: 36 };
+      const width = rect.width - pad.left - pad.right;
+      const height = rect.height - pad.top - pad.bottom;
+      const values = points.map((point) => point.rate);
+      const min = Math.min(...values);
+      const max = Math.max(...values);
+      const span = Math.max(max - min, 0.0001);
+      const low = min - span * 0.12;
+      const high = max + span * 0.12;
+
+      const x = (index) => pad.left + (points.length === 1 ? width : (index / (points.length - 1)) * width);
+      const y = (value) => pad.top + ((high - value) / (high - low)) * height;
+
+      ctx.fillStyle = "#ffffff";
+      ctx.fillRect(0, 0, rect.width, rect.height);
+
+      ctx.strokeStyle = "#e5e7eb";
+      ctx.lineWidth = 1;
+      ctx.fillStyle = "#667085";
+      ctx.font = "12px -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif";
+      for (let i = 0; i <= 4; i += 1) {
+        const value = low + ((high - low) * i) / 4;
+        const yy = y(value);
+        ctx.beginPath();
+        ctx.moveTo(pad.left, yy);
+        ctx.lineTo(rect.width - pad.right, yy);
+        ctx.stroke();
+        ctx.fillText(value.toFixed(4), 8, yy + 4);
+      }
+
+      const highY = y(result.window.high_rate);
+      ctx.strokeStyle = "#b42318";
+      ctx.setLineDash([5, 5]);
+      ctx.beginPath();
+      ctx.moveTo(pad.left, highY);
+      ctx.lineTo(rect.width - pad.right, highY);
+      ctx.stroke();
+      ctx.setLineDash([]);
+
+      const gradient = ctx.createLinearGradient(0, pad.top, 0, rect.height - pad.bottom);
+      gradient.addColorStop(0, "rgba(37, 99, 235, 0.18)");
+      gradient.addColorStop(1, "rgba(21, 128, 61, 0.03)");
+
+      ctx.beginPath();
+      points.forEach((point, index) => {
+        const xx = x(index);
+        const yy = y(point.rate);
+        if (index === 0) ctx.moveTo(xx, yy);
+        else ctx.lineTo(xx, yy);
+      });
+      ctx.lineTo(x(points.length - 1), rect.height - pad.bottom);
+      ctx.lineTo(x(0), rect.height - pad.bottom);
+      ctx.closePath();
+      ctx.fillStyle = gradient;
+      ctx.fill();
+
+      ctx.beginPath();
+      points.forEach((point, index) => {
+        const xx = x(index);
+        const yy = y(point.rate);
+        if (index === 0) ctx.moveTo(xx, yy);
+        else ctx.lineTo(xx, yy);
+      });
+      ctx.strokeStyle = "#2563eb";
+      ctx.lineWidth = 2.4;
+      ctx.stroke();
+
+      const latest = points[points.length - 1];
+      ctx.fillStyle = result.signals.alert ? "#b42318" : result.signals.status === "watch" ? "#b45309" : "#15803d";
+      ctx.beginPath();
+      ctx.arc(x(points.length - 1), y(latest.rate), 5, 0, Math.PI * 2);
+      ctx.fill();
+
+      ctx.fillStyle = "#667085";
+      ctx.fillText(points[0].date, pad.left, rect.height - 12);
+      const endText = points[points.length - 1].date;
+      const textWidth = ctx.measureText(endText).width;
+      ctx.fillText(endText, rect.width - pad.right - textWidth, rect.height - 12);
+    }
+
+    function setLoading(isLoading) {
+      nodes.refresh.disabled = isLoading;
+      if (isLoading) {
+        nodes.status.textContent = "读取中";
+        nodes.status.className = "status-badge";
+      }
+    }
+
+    function showError(error) {
+      nodes.status.textContent = "失败";
+      nodes.status.className = "status-badge alert";
+      nodes.chartMeta.textContent = String(error.message || error);
+      nodes.action.textContent = "没有拿到汇率数据。运行 python monitor.py 生成 data/rates.json，或检查网络/API 可用性。";
+    }
+
+    function toIsoDate(value) {
+      return value.toISOString().slice(0, 10);
+    }
+
+    function formatPct(value) {
+      return value === null || Number.isNaN(value) ? "n/a" : `${value.toFixed(2)}%`;
+    }
+
+    function formatMoney(value) {
+      return Number(value).toLocaleString("zh-CN", {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+      });
+    }
+  </script>
+</body>
+</html>

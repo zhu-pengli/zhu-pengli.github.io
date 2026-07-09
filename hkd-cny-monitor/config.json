@@ -1,0 +1,13 @@
+{
+  "base": "HKD",
+  "quote": "CNY",
+  "amount_hkd": 100000,
+  "lookback_days": 90,
+  "near_high_threshold_pct": 0.3,
+  "alert_min_percentile": 90,
+  "target_rate": null,
+  "bank_spread_pct": 0.15,
+  "provider_url": "https://api.frankfurter.dev",
+  "timezone": "Asia/Shanghai",
+  "request_timeout_seconds": 20
+}
