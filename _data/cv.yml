@@ -64,16 +64,8 @@
   contents:
     - title: Regular Reviever
       items:
-        - MICCAI
-        - Neural Networks
-        - Pattern Recognition
-        - Medical Image Analysis
-        - Expert Systems with Applications
-        - IEEE Transactions on Medical Imaging
-        - IEEE Transactions on Vehicular Technology
-        - Engineering Applications of Artificial Intelligence
-        - IEEE Journal of Biomedical and Health Informatics
-        - IEEE Transactions on Pattern Analysis and Machine Intelligence
+        - MICCAI, Neural Networks, PR, MIA, ESWA 
+        - IEEE TPAMI, TMI, TMM, TVT, JBHI
     - title: Professional Memberships
       items:
         - Institute of Electrical and Electronics Engineers (IEEE)
