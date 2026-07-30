@@ -62,6 +62,9 @@
 - title: Activities
   type: nested_list
   contents:
+    - title: Editor
+      items:
+        - Computers, Materials & Continua (Q1) Guest Editor
     - title: Regular Reviever
       items:
         - MICCAI, Neural Networks, PR, MIA, ESWA 
