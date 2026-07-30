@@ -187,13 +187,7 @@
 
     <!-- Journal Title and Date Styling -->
     <div class="periodical" style="font-size: 16px; font-family: 'Times New Roman', Times, serif;">
-      <span style="font-style: italic;">
-        {{ entrytype }}
-      </span>
-      {% if entrytype_text != "" and entryyear != "" %}, {% endif %}
-      <span style="font-style: normal;">
-        {{ entrymonth }}{{ entryyear }}
-      </span>
+      <span style="font-style: italic;">{{ entrytype }}</span>{% if entrytype_text != "" and entryyear != "" %}, {% endif %}<span style="font-style: normal;">{{ entrymonth }}{{ entryyear }}</span>
     </div>
 
     <!-- Additional note if any -->
