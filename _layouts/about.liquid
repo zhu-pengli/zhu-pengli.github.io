@@ -30,19 +30,13 @@ layout: default
       {% endif %}
 
       <div class="home-hero__actions">
-        <a class="home-action home-action--primary" href="{{ '/publications/' | relative_url }}">Publications</a>
-        {% if site.data.socials.scholar_userid %}
-          <a
-            class="home-action"
-            href="https://scholar.google.com/citations?user={{ site.data.socials.scholar_userid }}"
-            target="_blank"
-            rel="external nofollow noopener"
-          >Google Scholar</a>
-        {% endif %}
-        <a class="home-action" href="{{ '/assets/pdf/Pengli_CV.pdf' | relative_url }}" target="_blank" rel="noopener noreferrer">CV (PDF)</a>
-        {% if site.data.socials.email %}
-          <a class="home-action" href="mailto:{{ site.data.socials.email | encode_email }}">Email</a>
-        {% endif %}
+        <a
+          class="home-action home-action--primary"
+          href="{{ '/assets/pdf/Pengli_CV.pdf' | relative_url }}"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Open Pengli Zhu's CV as a PDF"
+        >CV (PDF)</a>
       </div>
     </div>
 
