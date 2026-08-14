@@ -340,6 +340,11 @@ ul.task-list input[type="checkbox"] {
   }
 }
 
+.home-content > .clearfix p {
+  text-align: justify;
+  text-justify: inter-word;
+}
+
 .home-news {
   margin-top: 2.5rem;
 }
