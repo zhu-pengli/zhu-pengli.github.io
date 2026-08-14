@@ -12,6 +12,7 @@ hero:
     - Medical Image Synthesis
     - MRI Harmonization
     - Image Quality Assessment
+    - Brain-Gut Disease Diagnosis
 
 profile:
   align: right
