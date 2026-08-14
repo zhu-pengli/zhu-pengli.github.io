@@ -215,6 +215,196 @@ ul.task-list input[type="checkbox"] {
   margin-right: 1rem;
 }
 
+// Academic homepage hero
+
+.home-hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(220px, 300px);
+  gap: 3rem;
+  align-items: center;
+  margin: 1.5rem 0 3rem;
+  padding: 2.5rem;
+  border: 1px solid var(--global-divider-color);
+  border-radius: 1.25rem;
+  background: linear-gradient(135deg, rgba(181, 9, 172, 0.08), rgba(38, 152, 186, 0.04));
+}
+
+.home-hero__eyebrow {
+  margin-bottom: 0.75rem;
+  color: var(--global-theme-color);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.home-hero__title {
+  margin-bottom: 0.75rem;
+  font-size: clamp(2.6rem, 6vw, 4.4rem);
+  line-height: 1;
+  letter-spacing: -0.04em;
+}
+
+.home-hero__tagline {
+  margin-bottom: 1rem;
+  font-size: clamp(1.15rem, 2vw, 1.45rem);
+  font-weight: 500;
+  line-height: 1.45;
+}
+
+.home-hero__summary {
+  max-width: 42rem;
+  margin-bottom: 1.25rem;
+  color: var(--global-text-color-light);
+  font-size: 1rem;
+  line-height: 1.7;
+}
+
+.home-hero__topics {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 0 0 1.5rem;
+  padding: 0;
+  list-style: none;
+
+  li {
+    padding: 0.35rem 0.75rem;
+    border: 1px solid var(--global-divider-color);
+    border-radius: 999px;
+    background: var(--global-card-bg-color);
+    font-size: 0.82rem;
+  }
+}
+
+.home-hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+}
+
+.home-action {
+  display: inline-flex;
+  align-items: center;
+  min-height: 42px;
+  padding: 0.55rem 0.9rem;
+  border: 1px solid var(--global-divider-color);
+  border-radius: 0.65rem;
+  background: var(--global-card-bg-color);
+  color: var(--global-text-color);
+  font-size: 0.9rem;
+  font-weight: 600;
+  transition:
+    border-color 0.2s ease,
+    color 0.2s ease,
+    transform 0.2s ease;
+
+  &:hover {
+    border-color: var(--global-theme-color);
+    color: var(--global-theme-color);
+    text-decoration: none;
+    transform: translateY(-1px);
+  }
+}
+
+.home-action--primary {
+  border-color: var(--global-theme-color);
+  background: var(--global-theme-color);
+  color: var(--global-hover-text-color);
+
+  &:hover {
+    color: var(--global-hover-text-color);
+  }
+}
+
+.home-hero__portrait {
+  margin: 0;
+
+  figure {
+    margin: 0;
+  }
+
+  img {
+    width: 100%;
+    aspect-ratio: 1 / 1.04;
+    object-fit: cover;
+    box-shadow: 0 1rem 2.5rem rgba(0, 0, 0, 0.16);
+  }
+}
+
+.home-content {
+  h2 {
+    margin-top: 2rem;
+    margin-bottom: 0.8rem;
+    font-size: 1.65rem;
+  }
+}
+
+.home-news {
+  margin-top: 2.5rem;
+}
+
+.home-section-heading {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  border-bottom: 1px solid var(--global-divider-color);
+
+  h2 {
+    margin: 0 0 0.65rem;
+  }
+
+  a {
+    font-size: 0.9rem;
+  }
+}
+
+.news-scroll {
+  max-height: 17rem;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-gutter: stable;
+
+  table {
+    margin-bottom: 0;
+  }
+}
+
+@media (max-width: 767.98px) {
+  .home-hero {
+    grid-template-columns: 1fr;
+    gap: 1.75rem;
+    margin-top: 1rem;
+    padding: 1.35rem;
+  }
+
+  .home-hero__content {
+    order: 1;
+  }
+
+  .home-hero__portrait {
+    order: 2;
+  }
+
+  .home-hero__title {
+    font-size: 2.75rem;
+  }
+
+  .home-hero__actions {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .home-action {
+    justify-content: center;
+  }
+
+  .news-scroll {
+    max-height: 20rem;
+  }
+}
+
 @media (min-width: 576px) {
   .profile {
     width: 30%;
@@ -877,6 +1067,54 @@ footer.sticky-bottom {
     }
     div.award.hidden.open {
       border-color: var(--global-highlight-color);
+    }
+  }
+}
+
+@media (max-width: 575.98px) {
+  .publications ol.bibliography li {
+    margin-bottom: 1.5rem;
+
+    > .row {
+      display: grid;
+      grid-template-columns: 112px minmax(0, 1fr);
+      gap: 0.9rem;
+      margin-right: 0;
+      margin-left: 0;
+    }
+
+    .abbr,
+    .col-sm-8,
+    .col-sm-10 {
+      width: auto;
+      max-width: none;
+      padding-right: 0;
+      padding-left: 0;
+    }
+
+    .abbr {
+      margin-bottom: 0;
+
+      figure {
+        margin: 0;
+      }
+
+      .preview {
+        width: 112px;
+        height: 112px;
+        object-fit: contain;
+        background: var(--global-card-bg-color);
+      }
+    }
+
+    .title {
+      font-size: 1.08rem !important;
+      line-height: 1.35;
+    }
+
+    .author,
+    .periodical {
+      font-size: 0.9rem !important;
     }
   }
 }
