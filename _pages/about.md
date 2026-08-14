@@ -7,7 +7,7 @@ subtitle:
 hero:
   eyebrow: Research Staff · The Chinese University of Hong Kong
   tagline: Medical Image Analysis · Generative AI · Computational Imaging
-  summary: I develop AI-driven computational frameworks for medical image synthesis, harmonization, noise correction, and quality assessment.
+  summary: My research advances AI-driven computational imaging, with a focus on robust medical image synthesis, harmonization, noise correction, and quality assessment for brain–gut disease diagnosis.
   topics:
     - Medical Image Synthesis
     - MRI Harmonization
