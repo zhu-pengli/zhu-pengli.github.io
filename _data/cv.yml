@@ -11,7 +11,9 @@
 - title: Research Interests
   type: list
   contents:
-    - My current research interests include intelligent image processing and machine learning.
+    - Medical image analysis and AI-driven computational imaging.
+    - Generative AI for medical image synthesis, MRI harmonization, image enhancement, and quality assessment.
+    - Brain–gut disease diagnosis using machine learning.
 
 - title: Employment
   type: time_table
@@ -21,6 +23,7 @@
       year: 2026.04 - present
       description: 
         - Advised by <a href="https://www.ee.cuhk.edu.hk/en-gb/people/academic-staff/professors/prof-yixuan-yuan">Prof. Yixuan Yuan</a>
+        - Research on brain–gut disease diagnosis.
 
     - title: Research Associate and Postdoctoral Fellow
       institution: The Hong Kong Polytechnic University, Hong Kong.
