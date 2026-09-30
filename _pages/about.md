@@ -5,7 +5,7 @@ permalink: /
 subtitle: 
 
 hero:
-  eyebrow: Research Staff · The Chinese University of Hong Kong
+  eyebrow: Postdoctoral Fellow · The Chinese University of Hong Kong
   tagline: Medical Image Analysis · Generative AI · Computational Imaging
   summary: My research advances AI-driven computational imaging, with a focus on brain–gut disease diagnosis, medical image synthesis, harmonization, enhancement, and quality assessment.
   topics:
@@ -36,8 +36,7 @@ latest_posts:
 ---
 
 ## About
-I am currently a Research Staff with the [AIM Group](https://www.ee.cuhk.edu.hk/~yxyuan/), Department of Electronic Engineering, The Chinese University of Hong Kong (CUHK), Hong Kong. From 2024 to 2026, I was a Postdoctoral Research Fellow with the Department of Health Technology and Informatics at The Hong Kong Polytechnic University (PolyU). I received the B.Eng., M.Eng., and Ph.D. degrees from Dalian Maritime University (DMU) under the supervision of [Prof. Yancheng Liu](https://mec.dlmu.edu.cn/info/1891/11335.htm) and [Prof. Siyuan Liu](https://mec.dlmu.edu.cn/info/1911/12085.htm). From 2023 to 2024, I was a Joint-Training Ph.D. Student with the Department of Biomedical Engineering at the National University of Singapore (NUS), supported by the [China Scholarship Council](https://www.csc.edu.cn/). 
-
+I am currently a Postdoctoral Fellow in the [AIM Group](https://www.ee.cuhk.edu.hk/~yxyuan/), Department of Electronic Engineering, at The Chinese University of Hong Kong (CUHK), under the supervision of [Prof. Yixuan Yuan](https://www.ee.cuhk.edu.hk/en-gb/people/academic-staff/professors/prof-yixuan-yuan). My research focuses on medical image analysis and AI-driven computational imaging, with particular interests in brain–gut disease diagnosis, medical image synthesis, and MRI harmonization. From 2024 to 2026, I was a Postdoctoral Research Fellow in the Department of Health Technology and Informatics at The Hong Kong Polytechnic University (PolyU). I received my B.Eng., M.Eng., and Ph.D. degrees from Dalian Maritime University (DMU), under the supervision of [Prof. Yancheng Liu](https://mec.dlmu.edu.cn/info/1891/11335.htm) and [Prof. Siyuan Liu](https://mec.dlmu.edu.cn/info/1911/12085.htm). During my studies at DMU, I also worked closely with [Prof. Pew-Thian Yap](https://www.med.unc.edu/radiology/people/pew-thian-yap/). From 2023 to 2024, I was a Joint-Training Ph.D. Student in the Department of Biomedical Engineering at the National University of Singapore (NUS), supported by the [China Scholarship Council](https://www.csc.edu.cn/).
 
 ## Research
 
