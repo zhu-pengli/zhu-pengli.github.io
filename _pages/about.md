@@ -36,7 +36,7 @@ latest_posts:
 ---
 
 ## About
-I am currently a Research Staff with the [AIM Group](https://www.ee.cuhk.edu.hk/~yxyuan/), Department of Electronic Engineering, The Chinese University of Hong Kong, Hong Kong. From 2024 to 2026, I was a Postdoctoral Research Fellow with the Department of Health Technology and Informatics at The Hong Kong Polytechnic University. I received the B.Eng., M.Eng., and Ph.D. degrees from Dalian Maritime University under the supervision of [Prof. Yancheng Liu](https://mec.dlmu.edu.cn/info/1891/11335.htm) and [Prof. Siyuan Liu](https://mec.dlmu.edu.cn/info/1911/12085.htm). From 2023 to 2024, I was a Joint-Training Ph.D. Student with the Department of Biomedical Engineering at the National University of Singapore, supported by the [China Scholarship Council](https://www.csc.edu.cn/). 
+I am currently a Research Staff with the [AIM Group](https://www.ee.cuhk.edu.hk/~yxyuan/), Department of Electronic Engineering, The Chinese University of Hong Kong (CUHK), Hong Kong. From 2024 to 2026, I was a Postdoctoral Research Fellow with the Department of Health Technology and Informatics at The Hong Kong Polytechnic University (PolyU). I received the B.Eng., M.Eng., and Ph.D. degrees from Dalian Maritime University (DLMU) under the supervision of [Prof. Yancheng Liu](https://mec.dlmu.edu.cn/info/1891/11335.htm) and [Prof. Siyuan Liu](https://mec.dlmu.edu.cn/info/1911/12085.htm). From 2023 to 2024, I was a Joint-Training Ph.D. Student with the Department of Biomedical Engineering at the National University of Singapore (NUS), supported by the [China Scholarship Council](https://www.csc.edu.cn/). 
 
 
 ## Research
