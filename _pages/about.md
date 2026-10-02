@@ -7,10 +7,9 @@ subtitle:
 hero:
   eyebrow: Postdoctoral Fellow · The Chinese University of Hong Kong
   tagline: Medical Image Analysis · Generative AI · Computational Imaging
-  summary: My research advances AI-driven computational imaging, with a focus on brain–gut disease diagnosis, medical image synthesis, harmonization, enhancement, and quality assessment.
   topics:
-    - Medical Image Synthesis
-    - MRI Harmonization
+    - Neuroimage Generation
+    - Perceptual Decision and Control
     - Image Quality Assessment
     - Brain-Gut Disease Diagnosis
 
